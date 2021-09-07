@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.dao.IStudentDao">
+	<resultMap id="studentResultMap" type="com.zc.entity.Student">
+		<id property="sid" column="id" />
+		<result property="sname" column="studentname" />
+		<result property="sex" column="gender" />
+		<result property="age" column="age" />		
+	</resultMap>
+	 	
+   <select id="findAllStudents" resultType="com.zc.entity.Student" resultMap="studentResultMap">
+		SELECT 
+			*	
+		FROM STUDENT
+ 	</select>  	
+ 	
+ 	<select id="findStudentById"  parameterType="int"  resultMap="studentResultMap">
+		SELECT 
+			id,
+			studentname,
+			gender,
+			age		
+		FROM STUDENT where id=#{id}
+ 	</select> 	
+ 	
+ 	<!--   主键自增长 -->
+ 	<insert id="add" parameterType="Student"  keyProperty="sid" useGeneratedKeys="true">
+		INSERT INTO student(studentname, gender, age)
+		VALUES
+		(#{sname}, #{sex}, #{age})
+   </insert>    
+   <delete id="delete" parameterType="int">
+  	  delete from student where id=#{id}   
+   </delete>   
+    <update id="update" parameterType="Student">
+		UPDATE Student SET studentname=#{sname},gender=#{sex},age=#{age} 
+	    WHERE id= #{sid}
+    </update>
+</mapper>
